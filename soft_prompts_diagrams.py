@@ -36,19 +36,19 @@ ax.set_ylim(0, 10)
 
 # Hard Prompt
 ax.text(1, 9.5, "Hard Prompt (Discrete Text)", fontsize=14, weight='bold', color=C_TEXT)
-draw_rounded_box(ax, 0.5, 8, 3, 1, "Translate to French:\n(Tokens)", "#EAF2D3", font_size=11)
-draw_rounded_box(ax, 3.8, 8, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
-ax.text(3.65, 8.5, "+", fontsize=16, weight='bold', color=C_TEXT, ha='center', va='center')
-draw_fancy_arrow(ax, 3.65, 7.8, 3.65, 7.0)
-draw_rounded_box(ax, 2.15, 5.8, 3, 1, "Frozen LLM", C_MODEL, font_size=12, font_weight='bold')
+draw_rounded_box(ax, 0.2, 8, 3, 1, "Translate to French:\n(Tokens)", "#EAF2D3", font_size=11)
+draw_rounded_box(ax, 4.2, 8, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
+ax.text(3.7, 8.5, "+", fontsize=18, weight='bold', color=C_TEXT, ha='center', va='center')
+draw_fancy_arrow(ax, 3.7, 7.8, 3.7, 7.0)
+draw_rounded_box(ax, 2.2, 5.8, 3, 1, "Frozen LLM", C_MODEL, font_size=12, font_weight='bold')
 
 # Soft Prompt
 ax.text(1, 4.5, "Soft Prompt (Continuous Vectors)", fontsize=14, weight='bold', color=C_TEXT)
-draw_rounded_box(ax, 0.5, 3, 3, 1, "[P1, P2, P3, P4]\n(Trainable Vectors)", C_ADAPTER, font_size=11, font_weight='bold')
-draw_rounded_box(ax, 3.8, 3, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
-ax.text(3.65, 3.5, "+", fontsize=16, weight='bold', color=C_TEXT, ha='center', va='center')
-draw_fancy_arrow(ax, 3.65, 2.8, 3.65, 2.0)
-draw_rounded_box(ax, 2.15, 0.8, 3, 1, "Frozen LLM", C_MODEL, font_size=12, font_weight='bold')
+draw_rounded_box(ax, 0.2, 3, 3, 1, "$[P_1, P_2, P_3, P_4]$\n(Trainable Vectors)", C_ADAPTER, font_size=11, font_weight='bold')
+draw_rounded_box(ax, 4.2, 3, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
+ax.text(3.7, 3.5, "+", fontsize=18, weight='bold', color=C_TEXT, ha='center', va='center')
+draw_fancy_arrow(ax, 3.7, 2.8, 3.7, 2.0)
+draw_rounded_box(ax, 2.2, 0.8, 3, 1, "Frozen LLM", C_MODEL, font_size=12, font_weight='bold')
 
 plt.savefig('prompt_comparison.png', bbox_inches='tight', dpi=300)
 plt.close()
@@ -84,10 +84,10 @@ ax.axis('off')
 ax.set_xlim(0, 6)
 ax.set_ylim(0, 7)
 
-draw_rounded_box(ax, 1, 5.5, 4, 1.0, "Trainable Prompt Vectors\n[P_1, P_2, ..., P_m]", C_ADAPTER, font_size=12, font_weight='bold')
-draw_rounded_box(ax, 1, 4.0, 4, 1.0, "Frozen Input Embeddings\n[X_1, X_2, ..., X_n]", C_MODEL, font_size=12)
+draw_rounded_box(ax, 1, 5.5, 4, 1.0, "Trainable Prompt Vectors\n$[P_1, P_2, \dots, P_m]$", C_ADAPTER, font_size=12, font_weight='bold')
+draw_rounded_box(ax, 1, 4.0, 4, 1.0, "Frozen Input Embeddings\n$[X_1, X_2, \dots, X_n]$", C_MODEL, font_size=12)
 
-ax.text(3, 3.7, "Concatenate [P; X]", fontsize=12, weight='bold', ha='center', va='center')
+ax.text(3, 3.7, "Concatenate $[P; X]$", fontsize=12, weight='bold', ha='center', va='center')
 draw_fancy_arrow(ax, 3, 3.5, 3, 2.5)
 
 draw_rounded_box(ax, 1, 1.3, 4, 1.0, "Frozen Transformer Layers", C_MODEL, font_size=12, font_weight='bold')
