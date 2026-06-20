@@ -20,7 +20,7 @@ Adapters emerged as one of the first and most successful answers to this questio
 
 Before parameter-efficient fine-tuning (PEFT) methods existed, the standard industry approach was Full Fine-Tuning.
 
-![Traditional Fine-Tuning](https://raw.githubusercontent.com/ParitKansal/Articles/main/traditional_finetuning.png)
+![Traditional Fine-Tuning](images/traditional_finetuning.png)
 
 Suppose we have a base model with 7 billion parameters. To adapt it for a new task—like medical NLP—every single one of those 7 billion parameters would be updated during training. For a single specialized task, this might be acceptable. But imagine supporting a diverse suite of domains such as medical NLP, legal analysis, financial reporting, customer support, and scientific research. 
 
@@ -53,7 +53,7 @@ By isolating the learning process to these small insertions, we can achieve task
 
 In a standard Transformer block, every component participates fully in the learning process, meaning every parameter gets updated during fine-tuning. However, in their seminal 2019 paper, Houlsby et al. proposed a clever architectural tweak: inserting small adapter modules directly after the two major components of the Transformer block (the Multi-Head Attention layer and the Feed Forward Network layer).
 
-![Transformer with Adapters](https://raw.githubusercontent.com/ParitKansal/Articles/main/adapter_transformer.png)
+![Transformer with Adapters](images/adapter_transformer.png)
 
 Suddenly, the architecture gains a powerful new capability. The large pretrained model remains entirely fixed and acts as a universal feature extractor, while the newly inserted adapters learn the nuanced, task-specific behavior required for the new domain.
 
@@ -63,7 +63,7 @@ Suddenly, the architecture gains a powerful new capability. The large pretrained
 
 An adapter is intentionally designed to be small, and its architecture follows a highly efficient "bottleneck" design.
 
-![Adapter Bottleneck](https://raw.githubusercontent.com/ParitKansal/Articles/main/adapter_bottleneck.png)
+![Adapter Bottleneck](images/adapter_bottleneck.png)
 
 Let $d$ be the hidden dimension of the standard Transformer, and $r$ be the bottleneck dimension of the adapter, where $r \ll d$. For example, a common configuration might have a hidden dimension of $d = 768$ and a much smaller bottleneck of $r = 64$. 
 

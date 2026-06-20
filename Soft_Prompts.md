@@ -36,7 +36,7 @@ These prompts are composed of actual, discrete words from the model's vocabulary
 
 Soft prompts take a fundamentally different approach. Instead of providing discrete textual instructions, we learn a small collection of trainable, continuous vectors.
 
-![Hard Prompts vs Soft Prompts](https://raw.githubusercontent.com/ParitKansal/Articles/main/prompt_comparison.png)
+![Hard Prompts vs Soft Prompts](images/prompt_comparison.png)
 
 These soft vectors:
 * Are not distinct words from a vocabulary.
@@ -61,7 +61,7 @@ The model receives the concatenated sequence:
 $$ X' = [P \,;\, X] $$
 where $;$ denotes concatenation along the sequence length dimension.
 
-![Soft Prompts Architecture](https://raw.githubusercontent.com/ParitKansal/Articles/main/soft_prompt_architecture.png)
+![Soft Prompts Architecture](images/soft_prompt_architecture.png)
 
 The optimization objective becomes finding the optimal prompt $P$ that minimizes the task loss $\mathcal{L}$:
 $$ \min_P \mathcal{L}(P) $$
@@ -135,7 +135,7 @@ Before training, the instruction-initialized prompt naturally mapped back perfec
 
 After training for five epochs, the results were highly counterintuitive. 
 
-![Validation Loss Plot](https://raw.githubusercontent.com/ParitKansal/Articles/main/validation_loss_plot.png)
+![Validation Loss Plot](images/validation_loss_plot.png)
 
 Surprisingly, the random initialization consistently outperformed the instruction-based initialization at every epoch, converging to a significantly lower validation loss.
 
