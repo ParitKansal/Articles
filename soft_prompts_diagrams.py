@@ -58,13 +58,13 @@ plt.close()
 # ==========================================
 fig, ax = plt.subplots(figsize=(6, 4), facecolor=C_BG)
 epochs = [1, 2, 3, 4, 5]
-random_loss = [13.80, 10.06, 8.56, 7.25, 5.99]
-instruction_loss = [15.81, 14.91, 14.14, 12.78, 11.12]
+random_loss = [15.81, 14.91, 14.14, 12.78, 11.12]
+meaningful_loss = [13.80, 10.06, 8.56, 7.25, 5.99]
 
 ax.plot(epochs, random_loss, marker='o', linestyle='-', color='#E74C3C', linewidth=2, label='Random Initialization')
-ax.plot(epochs, instruction_loss, marker='s', linestyle='--', color='#3498DB', linewidth=2, label='Instruction Initialization')
+ax.plot(epochs, meaningful_loss, marker='s', linestyle='--', color='#3498DB', linewidth=2, label='Meaningful Initialization')
 
-ax.set_title('Validation Loss Over Epochs', fontsize=14, weight='bold', color=C_TEXT)
+ax.set_title('Validation Loss Over Epochs (Small/Medium Models)', fontsize=14, weight='bold', color=C_TEXT)
 ax.set_xlabel('Epoch', fontsize=12, color=C_TEXT)
 ax.set_ylabel('Loss', fontsize=12, color=C_TEXT)
 ax.set_xticks(epochs)
