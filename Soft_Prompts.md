@@ -127,13 +127,13 @@ To test this hypothesis, researchers evaluated various initialization strategies
 
 The findings definitively answered the question: **Yes, meaningful initialization significantly improves the learning process**, especially for smaller and medium-sized models.
 
-### Validation Loss Over Time
+### Performance and Convergence
 
 When comparing a random initialization against an initialization grounded in meaningful task instructions or class labels, the performance gap is stark.
 
-![Validation Loss Plot](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/validation_loss_plot.png)
+Meaningful initialization consistently outperforms random initialization, converging faster and achieving higher performance. In fact, the seminal paper by **Lester et al. (2021), "The Power of Scale for Parameter-Efficient Prompt Tuning"**, demonstrated that initializing prompt embeddings from the model's sampled vocabulary can boost average SuperGLUE performance by up to **+10 points** compared to random uniform initialization.
 
-Meaningful initialization consistently outperforms random initialization, converging faster and to a significantly lower validation loss. In fact, research by Lester et al. (2021) demonstrated that initializing prompt embeddings from the model's sampled vocabulary can boost average downstream task performance by up to **+10 points** compared to random uniform initialization.
+Furthermore, a personalization study on abbreviation expansion (arXiv:2312.14327) showed that initializing soft prompts with user-relevant concepts (e.g., proper nouns and domain-specific terms) performs significantly better than random initialization, LLM vocabulary sampling, and even user-vocabulary sampling.
 
 ---
 
