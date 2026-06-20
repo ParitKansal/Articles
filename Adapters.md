@@ -117,3 +117,85 @@ While adapters provided a brilliant solution for parameter efficiency, faster tr
 This minor bottleneck in inference speed motivated researchers to look for even better solutions, eventually leading to the development of LoRA (Low-Rank Adaptation). While adapters add entirely new layers, LoRA mathematically modifies the existing weight matrices using low-rank decomposition ($y = (W + \Delta W) x$). Because the $\Delta W$ in LoRA can be permanently merged back into the original weights after training ($W_{\text{new}} = W + B A$), LoRA achieves parameter-efficient fine-tuning with strictly zero inference overhead.
 
 Today, modern fine-tuning pipelines are dominated by LoRA, QLoRA, and their variants. However, understanding adapters remains essential. They were the first major breakthrough to successfully prove that we do not need to update billions of parameters to teach a model new tricks. The foundational philosophy introduced by adapters—freezing generalized knowledge and training only small, specialized modules—is the exact same principle that powers almost every efficient fine-tuning methodology used in AI today.
+
+---
+
+## Appendix: A Simple PyTorch Implementation
+
+To make the math concrete, here is a simple implementation of an Adapter bottleneck in PyTorch.
+
+```python
+import torch
+import torch.nn as nn
+
+class Adapter(nn.Module):
+    def __init__(self, d_model: int, r: int):
+        """
+        d_model: Hidden dimension of the original Transformer (e.g., 768)
+        r: Bottleneck dimension (e.g., 64)
+        """
+        super().__init__()
+        
+        # 1. Down Projection
+        self.down_proj = nn.Linear(d_model, r)
+        
+        # 2. Non-Linearity
+        self.activation = nn.GELU()
+        
+        # 3. Up Projection
+        self.up_proj = nn.Linear(r, d_model)
+        
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # Save the original input for the residual connection
+        residual = x
+        
+        # Compress
+        h = self.down_proj(x)
+        
+        # Activate
+        h = self.activation(h)
+        
+        # Expand
+        z = self.up_proj(h)
+        
+        # Add residual connection
+        return residual + z
+
+class TransformerBlockWithAdapter(nn.Module):
+    def __init__(self, d_model: int, r: int):
+        super().__init__()
+        
+        # Standard Transformer components (Frozen during fine-tuning)
+        self.attention = nn.MultiheadAttention(embed_dim=d_model, num_heads=12)
+        self.ffn = nn.Sequential(
+            nn.Linear(d_model, d_model * 4),
+            nn.GELU(),
+            nn.Linear(d_model * 4, d_model)
+        )
+        self.layer_norm1 = nn.LayerNorm(d_model)
+        self.layer_norm2 = nn.LayerNorm(d_model)
+        
+        # New Adapter Modules (Trainable during fine-tuning)
+        self.adapter1 = Adapter(d_model, r)
+        self.adapter2 = Adapter(d_model, r)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # 1. Multi-Head Attention Sublayer
+        # (Assuming self-attention with query, key, value all equal to x)
+        attn_out, _ = self.attention(x, x, x)
+        x = x + attn_out
+        x = self.layer_norm1(x)
+        
+        # ---> Apply first adapter <---
+        x = self.adapter1(x)
+        
+        # 2. Feed-Forward Sublayer
+        ffn_out = self.ffn(x)
+        x = x + ffn_out
+        x = self.layer_norm2(x)
+        
+        # ---> Apply second adapter <---
+        x = self.adapter2(x)
+        
+        return x
+```
