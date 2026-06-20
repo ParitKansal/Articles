@@ -1,5 +1,11 @@
 # Adapters: The First Breakthrough in Parameter-Efficient Fine-Tuning
 
+**Excerpt:** Adapters were the first major breakthrough in parameter-efficient fine-tuning (PEFT), proving that you don't need to retrain a massive language model from scratch for every new task. By freezing the base model and training only tiny bottleneck modules, adapters dramatically reduce storage and compute costs while preserving state-of-the-art performance.
+
+**Read Time:** ~6 minutes
+
+---
+
 Imagine you have just spent millions of dollars and thousands of GPU hours training a massive language model. This model has learned intricate grammar, logical reasoning, software coding, complex mathematics, and vast amounts of general world knowledge. It contains billions of parameters and represents a monumental technical achievement. 
 
 Now, a customer approaches you with a request: *"Can you adapt this model specifically for medical diagnosis?"* Shortly after, a second customer asks for a version tailored to legal document analysis, and a third needs it to specialize in parsing financial reports. 
