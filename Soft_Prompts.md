@@ -36,7 +36,7 @@ These prompts are composed of actual, discrete words from the model's vocabulary
 
 Soft prompts take a fundamentally different approach. Instead of providing discrete textual instructions, we learn a small collection of trainable, continuous vectors.
 
-![Hard Prompts vs Soft Prompts](https://raw.githubusercontent.com/ParitKansal/Articles/main//prompt_comparison.png)
+![Hard Prompts vs Soft Prompts](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/prompt_comparison.png)
 
 These soft vectors:
 * Are not distinct words from a vocabulary.

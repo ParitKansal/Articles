@@ -29,27 +29,26 @@ def draw_fancy_arrow(ax, x1, y1, x2, y2):
 # ==========================================
 # 1. Hard Prompts vs Soft Prompts
 # ==========================================
-fig, ax = plt.subplots(figsize=(8, 6), facecolor=C_BG)
+fig, ax = plt.subplots(figsize=(8, 9), facecolor=C_BG)
 ax.axis('off')
 ax.set_xlim(0, 8)
-ax.set_ylim(0, 7)
+ax.set_ylim(0, 10)
 
 # Hard Prompt
-ax.text(1, 6.5, "Hard Prompt (Discrete Text)", fontsize=14, weight='bold', color=C_TEXT)
-draw_rounded_box(ax, 0.5, 5, 3, 1, "Translate to French:\n(Tokens)", "#EAF2D3", font_size=11)
-draw_rounded_box(ax, 3.8, 5, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
-ax.text(3.65, 5.5, "+", fontsize=16, weight='bold', color=C_TEXT, ha='center', va='center')
-draw_fancy_arrow(ax, 3.65, 4.8, 3.65, 3.8)
-draw_rounded_box(ax, 2.15, 2.5, 3, 1, "Frozen LLM", C_MODEL, font_size=12, font_weight='bold')
+ax.text(1, 9.5, "Hard Prompt (Discrete Text)", fontsize=14, weight='bold', color=C_TEXT)
+draw_rounded_box(ax, 0.5, 8, 3, 1, "Translate to French:\n(Tokens)", "#EAF2D3", font_size=11)
+draw_rounded_box(ax, 3.8, 8, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
+ax.text(3.65, 8.5, "+", fontsize=16, weight='bold', color=C_TEXT, ha='center', va='center')
+draw_fancy_arrow(ax, 3.65, 7.8, 3.65, 7.0)
+draw_rounded_box(ax, 2.15, 5.8, 3, 1, "Frozen LLM", C_MODEL, font_size=12, font_weight='bold')
 
 # Soft Prompt
-ax.text(1, 1.5, "Soft Prompt (Continuous Vectors)", fontsize=14, weight='bold', color=C_TEXT)
-draw_rounded_box(ax, 0.5, 0, 3, 1, "[P1, P2, P3, P4]\n(Trainable Vectors)", C_ADAPTER, font_size=11, font_weight='bold')
-draw_rounded_box(ax, 3.8, 0, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
-ax.text(3.65, 0.5, "+", fontsize=16, weight='bold', color=C_TEXT, ha='center', va='center')
-draw_fancy_arrow(ax, 3.65, 1.8, 3.65, 1.8) # dummy arrow, pointing up to model visually... wait
-# Let's adjust soft prompt arrow
-draw_fancy_arrow(ax, 3.65, 1.2, 3.65, 2.2)
+ax.text(1, 4.5, "Soft Prompt (Continuous Vectors)", fontsize=14, weight='bold', color=C_TEXT)
+draw_rounded_box(ax, 0.5, 3, 3, 1, "[P1, P2, P3, P4]\n(Trainable Vectors)", C_ADAPTER, font_size=11, font_weight='bold')
+draw_rounded_box(ax, 3.8, 3, 3, 1, "How are you?\n(Input)", C_MODEL, font_size=11)
+ax.text(3.65, 3.5, "+", fontsize=16, weight='bold', color=C_TEXT, ha='center', va='center')
+draw_fancy_arrow(ax, 3.65, 2.8, 3.65, 2.0)
+draw_rounded_box(ax, 2.15, 0.8, 3, 1, "Frozen LLM", C_MODEL, font_size=12, font_weight='bold')
 
 plt.savefig('prompt_comparison.png', bbox_inches='tight', dpi=300)
 plt.close()
