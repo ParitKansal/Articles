@@ -33,28 +33,29 @@ ax.set_xlim(0, 10)
 ax.set_ylim(0, 8)
 
 # Prompt Tuning (Left)
-ax.text(2.5, 7.5, "Prompt Tuning", fontsize=14, weight='bold', color=C_TEXT, ha='center')
-draw_rounded_box(ax, 1, 6, 3, 0.8, "Input Tokens", C_MODEL)
-draw_rounded_box(ax, 1, 5, 3, 0.8, "Trainable Prompts", C_PREFIX, font_weight='bold')
-draw_fancy_arrow(ax, 2.5, 4.8, 2.5, 4.0)
-draw_rounded_box(ax, 1, 3.0, 3, 0.8, "Transformer Layer 1", C_MODEL)
-draw_fancy_arrow(ax, 2.5, 2.8, 2.5, 2.0)
-draw_rounded_box(ax, 1, 1.0, 3, 0.8, "Transformer Layer 2", C_MODEL)
+ax.text(2.0, 7.5, "Prompt Tuning", fontsize=14, weight='bold', color=C_TEXT, ha='center')
+draw_rounded_box(ax, 0.5, 6, 1.5, 0.8, "Prompts", C_PREFIX, font_weight='bold')
+draw_rounded_box(ax, 2.0, 6, 1.5, 0.8, "Input Tokens", C_MODEL)
+draw_fancy_arrow(ax, 2.0, 5.8, 2.0, 4.0)
+
+draw_rounded_box(ax, 0.5, 3.0, 3, 0.8, "Transformer Layer 1", C_MODEL)
+draw_fancy_arrow(ax, 2.0, 2.8, 2.0, 2.0)
+draw_rounded_box(ax, 0.5, 1.0, 3, 0.8, "Transformer Layer 2", C_MODEL)
 
 # Prefix Tuning (Right)
-ax.text(7.5, 7.5, "Prefix Tuning", fontsize=14, weight='bold', color=C_TEXT, ha='center')
-draw_rounded_box(ax, 6, 6, 3, 0.8, "Input Tokens", C_MODEL)
-draw_fancy_arrow(ax, 7.5, 5.8, 7.5, 4.0)
+ax.text(8.0, 7.5, "Prefix Tuning", fontsize=14, weight='bold', color=C_TEXT, ha='center')
+draw_rounded_box(ax, 6.5, 6, 3, 0.8, "Input Tokens", C_MODEL)
+draw_fancy_arrow(ax, 8.0, 5.8, 8.0, 4.0)
 
-draw_rounded_box(ax, 5.5, 3.0, 4, 0.8, "Transformer Layer 1", C_MODEL)
-draw_rounded_box(ax, 4.3, 3.1, 1, 0.6, "Prefixes", C_PREFIX, font_size=10, font_weight='bold')
-draw_fancy_arrow(ax, 5.3, 3.4, 5.5, 3.4)
+draw_rounded_box(ax, 6.0, 3.0, 4, 0.8, "Transformer Layer 1", C_MODEL)
+draw_rounded_box(ax, 4.5, 3.1, 1.2, 0.6, "Prefixes", C_PREFIX, font_size=10, font_weight='bold')
+draw_fancy_arrow(ax, 5.7, 3.4, 6.0, 3.4)
 
-draw_fancy_arrow(ax, 7.5, 2.8, 7.5, 2.0)
+draw_fancy_arrow(ax, 8.0, 2.8, 8.0, 2.0)
 
-draw_rounded_box(ax, 5.5, 1.0, 4, 0.8, "Transformer Layer 2", C_MODEL)
-draw_rounded_box(ax, 4.3, 1.1, 1, 0.6, "Prefixes", C_PREFIX, font_size=10, font_weight='bold')
-draw_fancy_arrow(ax, 5.3, 1.4, 5.5, 1.4)
+draw_rounded_box(ax, 6.0, 1.0, 4, 0.8, "Transformer Layer 2", C_MODEL)
+draw_rounded_box(ax, 4.5, 1.1, 1.2, 0.6, "Prefixes", C_PREFIX, font_size=10, font_weight='bold')
+draw_fancy_arrow(ax, 5.7, 1.4, 6.0, 1.4)
 
 plt.savefig('prefix_vs_prompt.png', bbox_inches='tight', dpi=300)
 plt.close()
@@ -75,19 +76,19 @@ draw_rounded_box(ax, 6.15, 5, 1.5, 0.8, "$P_V$\n(Trainable)", C_PREFIX, font_wei
 draw_rounded_box(ax, 7.95, 5, 1.5, 0.8, "Value (V)", C_MODEL)
 
 # Arrows to Concat
-draw_fancy_arrow(ax, 3.2, 5, 3.2, 3.8)
-draw_fancy_arrow(ax, 5.0, 5, 5.0, 3.8)
-draw_fancy_arrow(ax, 6.9, 5, 6.9, 3.8)
-draw_fancy_arrow(ax, 8.7, 5, 8.7, 3.8)
+draw_fancy_arrow(ax, 3.2, 4.87, 3.2, 3.93)
+draw_fancy_arrow(ax, 5.0, 4.87, 5.0, 3.93)
+draw_fancy_arrow(ax, 6.9, 4.87, 6.9, 3.93)
+draw_fancy_arrow(ax, 8.7, 4.87, 8.7, 3.93)
 
 # Concat Boxes
 draw_rounded_box(ax, 2.5, 3, 3.2, 0.8, "Concat: $[P_K; K]$", C_MODEL, font_weight='bold')
 draw_rounded_box(ax, 6.2, 3, 3.2, 0.8, "Concat: $[P_V; V]$", C_MODEL, font_weight='bold')
 
 # Arrows to MHA
-draw_fancy_arrow(ax, 1.25, 5, 1.25, 1.8)
-draw_fancy_arrow(ax, 4.1, 3, 4.1, 1.8)
-draw_fancy_arrow(ax, 7.8, 3, 7.8, 1.8)
+draw_fancy_arrow(ax, 1.25, 4.87, 1.25, 1.93)
+draw_fancy_arrow(ax, 4.1, 2.87, 4.1, 1.93)
+draw_fancy_arrow(ax, 7.8, 2.87, 7.8, 1.93)
 
 # MHA Box
 draw_rounded_box(ax, 0.5, 1, 8.9, 0.8, "Multi-Head Attention", C_MODEL, font_size=12, font_weight='bold')
