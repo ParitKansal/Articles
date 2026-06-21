@@ -27,9 +27,9 @@ def draw_fancy_arrow(ax, x1, y1, x2, y2, connectionstyle="arc3"):
                                 connectionstyle=connectionstyle))
 
 # 1. Prompt Tuning vs Prefix Tuning
-fig, ax = plt.subplots(figsize=(10, 6), facecolor=C_BG)
+fig, ax = plt.subplots(figsize=(10.5, 6), facecolor=C_BG)
 ax.axis('off')
-ax.set_xlim(0, 10)
+ax.set_xlim(0, 10.5)
 ax.set_ylim(0, 8)
 
 # Prompt Tuning (Left)
