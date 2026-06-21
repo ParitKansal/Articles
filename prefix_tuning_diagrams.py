@@ -60,37 +60,37 @@ plt.savefig('prefix_vs_prompt.png', bbox_inches='tight', dpi=300)
 plt.close()
 
 # 2. Prefix Attention
-fig, ax = plt.subplots(figsize=(8, 6), facecolor=C_BG)
+fig, ax = plt.subplots(figsize=(10, 6), facecolor=C_BG)
 ax.axis('off')
-ax.set_xlim(0, 8)
-ax.set_ylim(0, 8)
+ax.set_xlim(0, 10)
+ax.set_ylim(0, 7)
 
-ax.text(4, 7.5, "Prefix Tuning in Attention Layer", fontsize=14, weight='bold', color=C_TEXT, ha='center')
+ax.text(5, 6.5, "Prefix Tuning in Attention Layer", fontsize=14, weight='bold', color=C_TEXT, ha='center')
 
-# Q, K, V
-draw_rounded_box(ax, 1, 6, 1.5, 0.8, "Query (Q)", C_MODEL)
-draw_rounded_box(ax, 3.5, 6, 1.5, 0.8, "Key (K)", C_MODEL)
-draw_rounded_box(ax, 6, 6, 1.5, 0.8, "Value (V)", C_MODEL)
+# Q, P_K, K, P_V, V
+draw_rounded_box(ax, 0.5, 5, 1.5, 0.8, "Query (Q)", C_MODEL)
+draw_rounded_box(ax, 2.45, 5, 1.5, 0.8, "$P_K$\n(Trainable)", C_PREFIX, font_weight='bold')
+draw_rounded_box(ax, 4.25, 5, 1.5, 0.8, "Key (K)", C_MODEL)
+draw_rounded_box(ax, 6.15, 5, 1.5, 0.8, "$P_V$\n(Trainable)", C_PREFIX, font_weight='bold')
+draw_rounded_box(ax, 7.95, 5, 1.5, 0.8, "Value (V)", C_MODEL)
 
-# Prefixes
-draw_rounded_box(ax, 3.5, 4.5, 1.5, 0.8, "$P_K$\n(Trainable)", C_PREFIX, font_size=10, font_weight='bold')
-draw_rounded_box(ax, 6, 4.5, 1.5, 0.8, "$P_V$\n(Trainable)", C_PREFIX, font_size=10, font_weight='bold')
+# Arrows to Concat
+draw_fancy_arrow(ax, 3.2, 5, 3.2, 3.8)
+draw_fancy_arrow(ax, 5.0, 5, 5.0, 3.8)
+draw_fancy_arrow(ax, 6.9, 5, 6.9, 3.8)
+draw_fancy_arrow(ax, 8.7, 5, 8.7, 3.8)
 
-# Concat
-draw_fancy_arrow(ax, 4.25, 4.3, 4.25, 3.5)
-draw_fancy_arrow(ax, 4.25, 5.8, 4.25, 3.5)
+# Concat Boxes
+draw_rounded_box(ax, 2.5, 3, 3.2, 0.8, "Concat: $[P_K; K]$", C_MODEL, font_weight='bold')
+draw_rounded_box(ax, 6.2, 3, 3.2, 0.8, "Concat: $[P_V; V]$", C_MODEL, font_weight='bold')
 
-draw_fancy_arrow(ax, 6.75, 4.3, 6.75, 3.5)
-draw_fancy_arrow(ax, 6.75, 5.8, 6.75, 3.5)
+# Arrows to MHA
+draw_fancy_arrow(ax, 1.25, 5, 1.25, 1.8)
+draw_fancy_arrow(ax, 4.1, 3, 4.1, 1.8)
+draw_fancy_arrow(ax, 7.8, 3, 7.8, 1.8)
 
-draw_rounded_box(ax, 3, 2.5, 2.5, 0.8, "Concat: $[P_K; K]$", C_MODEL, font_weight='bold')
-draw_rounded_box(ax, 5.5, 2.5, 2.5, 0.8, "Concat: $[P_V; V]$", C_MODEL, font_weight='bold')
-
-draw_fancy_arrow(ax, 1.75, 5.8, 1.75, 1.5)
-draw_fancy_arrow(ax, 4.25, 2.3, 4.25, 1.5)
-draw_fancy_arrow(ax, 6.75, 2.3, 6.75, 1.5)
-
-draw_rounded_box(ax, 1, 0.5, 7, 0.8, "Multi-Head Attention", C_MODEL, font_size=12, font_weight='bold')
+# MHA Box
+draw_rounded_box(ax, 0.5, 1, 8.9, 0.8, "Multi-Head Attention", C_MODEL, font_size=12, font_weight='bold')
 
 plt.savefig('prefix_attention.png', bbox_inches='tight', dpi=300)
 plt.close()
