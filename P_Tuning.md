@@ -69,7 +69,7 @@ where $m$ is the number of prompt tokens, and $d$ is the hidden dimension of the
 
 A major innovation of P-Tuning over standard prompt tuning is the **Prompt Encoder**. Instead of directly optimizing the prompt vectors independently, P-Tuning passes the virtual tokens through a Bidirectional LSTM (Bi-LSTM) followed by a Feed-Forward Network (MLP).
 
-![P-Tuning Encoder Architecture](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/p_tuning_encoder.png)
+![P-Tuning Encoder Architecture](https://raw.githubusercontent.com/ParitKansal/Articles/2033f35941a3f2ad027353bd96a4821cfb182d31/images/p_tuning_encoder%20copy.png)
 
 Why use a Bi-LSTM? A bidirectional LSTM processes tokens in both forward and backward directions. This means the representation of each prompt token incorporates information from all surrounding prompt tokens. This allows the learned prompt to function as a highly contextual, coherent structure rather than just a collection of independent, isolated vectors.
 
