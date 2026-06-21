@@ -445,3 +445,367 @@ Trainable Parameters     : 172
 Full Parameters          : 17,226
 ===================================
 ```
+
+---
+
+### Appendix: SAID with DistilBERT on SST2
+
+Below is a more advanced example applying the SAID concept to the classifier head of a pretrained `distilbert-base-uncased` model fine-tuned on the SST2 sentiment analysis dataset.
+
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+
+from datasets import load_dataset
+from transformers import (
+    AutoTokenizer,
+    AutoModelForSequenceClassification
+)
+
+# =====================================================
+# Reproducibility
+# =====================================================
+torch.manual_seed(42)
+
+device = torch.device(
+    "cuda" if torch.cuda.is_available() else "cpu"
+)
+
+print("Device:", device)
+
+# =====================================================
+# Dataset Setup (Stanford Sentiment Treebank)
+# =====================================================
+dataset = load_dataset("stanfordnlp/sst2")
+
+tokenizer = AutoTokenizer.from_pretrained(
+    "distilbert-base-uncased"
+)
+
+def tokenize(batch):
+    return tokenizer(
+        batch["sentence"],
+        truncation=True,
+        padding="max_length",
+        max_length=268
+    )
+
+dataset = dataset.map(
+    tokenize,
+    batched=True
+)
+
+dataset.set_format(
+    type="torch",
+    columns=[
+        "input_ids",
+        "attention_mask",
+        "label"
+    ]
+)
+
+train_loader = torch.utils.data.DataLoader(
+    dataset["train"],
+    batch_size=512,
+    shuffle=True
+)
+
+val_loader = torch.utils.data.DataLoader(
+    dataset["validation"],
+    batch_size=512*2
+)
+
+# =====================================================
+# Model Definition
+# =====================================================
+model = AutoModelForSequenceClassification.from_pretrained(
+    "distilbert-base-uncased",
+    num_labels=2
+)
+
+model.to(device)
+
+# =====================================================
+# Freeze Everything (SAID Step 1)
+# =====================================================
+# All pretrained parameters are frozen to prevent full fine-tuning
+for p in model.parameters():
+    p.requires_grad = False
+
+# =====================================================
+# Save Original Classifier Parameters
+# =====================================================
+# We will only apply SAID to the final classifier layer for this example.
+# We save the original weights (\theta_0) and biases.
+base_weight = (
+    model.classifier.weight.detach().clone()
+)
+
+base_bias = (
+    model.classifier.bias.detach().clone()
+)
+
+weight_size = base_weight.numel()
+bias_size = base_bias.numel()
+
+D = weight_size + bias_size # Full parameter space D for the classifier
+
+print("\nClassifier parameter count:", D)
+
+# =====================================================
+# Intrinsic Dimension Setup (SAID Step 2)
+# =====================================================
+d = 256 # Low-dimensional subspace d
+
+# z is our only trainable parameter
+z = nn.Parameter(
+    torch.zeros(d, device=device)
+)
+
+# Random projection matrix F_proj mapping from d back to D
+F_proj = torch.randn(
+    D,
+    d,
+    device=device
+) * 0.01
+
+print("Intrinsic Dimension:", d)
+print("Compression:", D / d)
+
+# =====================================================
+# Build Parameters Function (SAID Step 3)
+# =====================================================
+def build_classifier():
+    # Project low-dimensional z into the full space: \Delta\theta = F(z)
+    delta_theta = F_proj @ z
+
+    # Split \Delta\theta into weight and bias updates
+    delta_w = delta_theta[:weight_size]
+    delta_b = delta_theta[weight_size:]
+
+    # \theta = \theta_0 + \Delta\theta
+    weight = (
+        base_weight.to(device)
+        + delta_w.view_as(base_weight)
+    )
+
+    bias = (
+        base_bias.to(device)
+        + delta_b.view_as(base_bias)
+    )
+
+    return weight, bias
+
+# =====================================================
+# Custom Forward Pass
+# =====================================================
+def forward_said(input_ids, attention_mask):
+    # Pass inputs through the frozen DistilBERT backbone
+    outputs = model.distilbert(
+        input_ids=input_ids,
+        attention_mask=attention_mask
+    )
+
+    hidden = outputs.last_hidden_state[:, 0]
+    hidden = model.pre_classifier(hidden)
+    hidden = torch.relu(hidden)
+    hidden = model.dropout(hidden)
+
+    # Dynamically build the classifier using our intrinsic vector z
+    weight, bias = build_classifier()
+
+    # Apply the custom classifier
+    logits = F.linear(
+        hidden,
+        weight,
+        bias
+    )
+
+    return logits
+
+# =====================================================
+# Evaluation Loop
+# =====================================================
+@torch.no_grad()
+def evaluate():
+    total = 0
+    correct = 0
+
+    for batch in val_loader:
+        ids = batch["input_ids"].to(device)
+        mask = batch["attention_mask"].to(device)
+        labels = batch["label"].to(device)
+
+        logits = forward_said(ids, mask)
+        preds = logits.argmax(dim=1)
+
+        correct += (
+            preds == labels
+        ).sum().item()
+
+        total += labels.size(0)
+
+    return 100 * correct / total
+
+# =====================================================
+# Optimizer
+# =====================================================
+# We only optimize z!
+optimizer = optim.Adam(
+    [z],
+    lr=1e-2
+)
+
+# =====================================================
+# Training Loop
+# =====================================================
+epochs = 5
+
+for epoch in range(epochs):
+    running_loss = 0
+
+    for step, batch in enumerate(train_loader):
+        ids = batch["input_ids"].to(device)
+        mask = batch["attention_mask"].to(device)
+        labels = batch["label"].to(device)
+
+        # Forward pass using SAID parameters
+        logits = forward_said(
+            ids,
+            mask
+        )
+
+        loss = F.cross_entropy(
+            logits,
+            labels
+        )
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step() # Updates z
+
+        running_loss += loss.item()
+
+        if step % 20 == 0:
+            print(
+                f"Epoch {epoch+1} "
+                f"Step {step} "
+                f"Loss {loss.item():.4f}"
+            )
+
+    val_acc = evaluate()
+
+    print(
+        f"\nEpoch {epoch+1} Completed"
+        f"\nAverage Loss: {running_loss/len(train_loader):.4f}"
+        f"\nValidation Accuracy: {val_acc:.2f}%\n"
+    )
+
+# =====================================================
+# Final Evaluation
+# =====================================================
+final_acc = evaluate()
+
+print("\n========== RESULTS ==========")
+print(f"Validation Accuracy: {final_acc:.2f}%")
+print("Intrinsic Dimension:", d)
+print("Trainable Params:", z.numel())
+print("Classifier Params:", D)
+print("Compression Ratio:", round(D/d, 2))
+print("=============================")
+```
+
+```text
+[transformers] DistilBertForSequenceClassification LOAD REPORT from: distilbert-base-uncased
+Key                     | Status     | 
+------------------------+------------+-
+vocab_layer_norm.weight | UNEXPECTED | 
+vocab_layer_norm.bias   | UNEXPECTED | 
+vocab_projector.bias    | UNEXPECTED | 
+vocab_transform.bias    | UNEXPECTED | 
+vocab_transform.weight  | UNEXPECTED | 
+classifier.bias         | MISSING    | 
+pre_classifier.bias     | MISSING    | 
+classifier.weight       | MISSING    | 
+pre_classifier.weight   | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+
+Classifier parameter count: 1538
+Intrinsic Dimension: 256
+Compression: 6.0078125
+Epoch 1 Step 0 Loss 0.7029
+Epoch 1 Step 20 Loss 0.6674
+Epoch 1 Step 40 Loss 0.6511
+Epoch 1 Step 60 Loss 0.6290
+Epoch 1 Step 80 Loss 0.6096
+Epoch 1 Step 100 Loss 0.6000
+Epoch 1 Step 120 Loss 0.5563
+
+Epoch 1 Completed
+Average Loss: 0.6255
+Validation Accuracy: 78.78%
+
+Epoch 2 Step 0 Loss 0.5571
+Epoch 2 Step 20 Loss 0.5587
+Epoch 2 Step 40 Loss 0.5363
+Epoch 2 Step 60 Loss 0.5338
+Epoch 2 Step 80 Loss 0.5120
+Epoch 2 Step 100 Loss 0.5194
+Epoch 2 Step 120 Loss 0.5225
+
+Epoch 2 Completed
+Average Loss: 0.5318
+Validation Accuracy: 79.59%
+
+Epoch 3 Step 0 Loss 0.5089
+Epoch 3 Step 20 Loss 0.4983
+Epoch 3 Step 40 Loss 0.4857
+Epoch 3 Step 60 Loss 0.4694
+Epoch 3 Step 80 Loss 0.4850
+Epoch 3 Step 100 Loss 0.4945
+Epoch 3 Step 120 Loss 0.4753
+
+Epoch 3 Completed
+Average Loss: 0.4830
+Validation Accuracy: 80.16%
+
+Epoch 4 Step 0 Loss 0.4692
+Epoch 4 Step 20 Loss 0.4909
+Epoch 4 Step 40 Loss 0.4378
+Epoch 4 Step 60 Loss 0.4453
+Epoch 4 Step 80 Loss 0.4485
+Epoch 4 Step 100 Loss 0.4700
+Epoch 4 Step 120 Loss 0.4446
+
+Epoch 4 Completed
+Average Loss: 0.4547
+Validation Accuracy: 80.39%
+
+Epoch 5 Step 0 Loss 0.4444
+Epoch 5 Step 20 Loss 0.4739
+Epoch 5 Step 40 Loss 0.4399
+Epoch 5 Step 60 Loss 0.4424
+Epoch 5 Step 80 Loss 0.4145
+Epoch 5 Step 100 Loss 0.4406
+Epoch 5 Step 120 Loss 0.4114
+
+Epoch 5 Completed
+Average Loss: 0.4369
+Validation Accuracy: 81.08%
+
+
+========== RESULTS ==========
+Validation Accuracy: 81.08%
+Intrinsic Dimension: 256
+Trainable Params: 256
+Classifier Params: 1538
+Compression Ratio: 6.01
+=============================
+```
+
+![SAID DistilBERT Training Metrics](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/said_distilbert_sst2_metrics.png)
