@@ -91,6 +91,8 @@ $$ P_K, P_V = \text{MLP}(E_{\text{prefix}}) $$
 
 Instead of learning the massive high-dimensional prefix parameters directly, the model learns a smaller, compact prefix embedding ($E_{\text{prefix}}$) which is transformed by the MLP into the required dimensions. This process, called **reparameterization**, makes training much more stable and converges reliably. 
 
+![MLP Reparameterization](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/prefix_mlp.png)
+
 Once training is complete, the generated prefixes $P_K$ and $P_V$ can be saved, and the MLP generator is entirely discarded. During inference, only the final prefixes are concatenated, adding virtually zero computational overhead.
 
 ---
