@@ -124,10 +124,33 @@ class PrefixAttention(nn.Module):
         self.k_proj = nn.Linear(embed_dim, embed_dim)
         self.v_proj = nn.Linear(embed_dim, embed_dim)
         
-        # Trainable Prefixes for Key and Value (one per head)
-        self.prefix_k = nn.Parameter(torch.randn(1, num_heads, prefix_len, self.head_dim))
-        self.prefix_v = nn.Parameter(torch.randn(1, num_heads, prefix_len, self.head_dim))
+        # MLP Reparameterization (used during training)
+        self.prefix_len = prefix_len
+        self.prefix_embedding = nn.Embedding(prefix_len, embed_dim)
         
+        # The MLP generator transforms small embeddings into the large P_K and P_V
+        self.mlp = nn.Sequential(
+            nn.Linear(embed_dim, embed_dim * 2),
+            nn.Tanh(),
+            nn.Linear(embed_dim * 2, num_heads * self.head_dim * 2) # *2 for both K and V
+        )
+        
+    def get_prefixes(self, device):
+        # Generate the prefixes using the MLP
+        prefix_tokens = torch.arange(self.prefix_len, device=device).unsqueeze(0) 
+        embeds = self.prefix_embedding(prefix_tokens)              
+        
+        # Pass through MLP
+        generated_prefixes = self.mlp(embeds)                      
+        
+        # Reshape and split into P_K and P_V
+        generated_prefixes = generated_prefixes.view(1, self.prefix_len, 2, self.num_heads, self.head_dim)
+        
+        p_k = generated_prefixes[:, :, 0, :, :].transpose(1, 2)    # (1, num_heads, prefix_len, head_dim)
+        p_v = generated_prefixes[:, :, 1, :, :].transpose(1, 2)
+        
+        return p_k, p_v
+
     def forward(self, x):
         batch_size, seq_len, _ = x.size()
         
@@ -136,9 +159,10 @@ class PrefixAttention(nn.Module):
         K = self.k_proj(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
         V = self.v_proj(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
         
-        # Expand prefixes for the batch
-        p_k = self.prefix_k.expand(batch_size, -1, -1, -1)
-        p_v = self.prefix_v.expand(batch_size, -1, -1, -1)
+        # 1. Generate prefixes via MLP
+        p_k, p_v = self.get_prefixes(x.device)
+        
+        # 2. Expand prefixes for the batch
         
         # Concatenate prefixes with Keys and Values
         K_new = torch.cat([p_k, K], dim=2)
@@ -168,7 +192,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 peft_config = PrefixTuningConfig(
     task_type=TaskType.CAUSAL_LM,
     num_virtual_tokens=30,      # Length of the prefix
-    prefix_projection=True      # Enables the MLP reparameterization
+    prefix_projection=True      # Enables the 
 )
 
 # Apply Prefix Tuning
