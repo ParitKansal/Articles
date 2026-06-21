@@ -164,7 +164,7 @@ QLoRA quantizes the base model to 4-bit precision, keeps the quantized model fro
 
 ---
 
-### Implementation: Tiny LoRA GPT in PyTorch
+## Implementation: Tiny LoRA GPT in PyTorch
 
 Below is an educational PyTorch implementation demonstrating how LoRA is implemented conceptually, including `LoRALinear`, `LoRAEmbedding`, and how they fit into a SwiGLU-based Transformer block.
 
@@ -339,7 +339,7 @@ print("LoRA Output Shape:", logits.shape)
 
 ---
 
-### Appendix: Modern Transformer Architecture Background
+## Appendix: Modern Transformer Architecture Background
 
 The base architecture used in the `TinyLoRAGPT` example above follows the standard patterns established by models like **LLaMA**, utilizing pre-normalization, SwiGLU MLP layers, and dual residual connections.
 
@@ -367,5 +367,7 @@ Consolidated, this becomes:
 $$
 \text{MLP}(h_1) = \bigl(\text{SiLU}(h_1 W_g) \odot (h_1 W_u)\bigr)W_d
 $$
+
+![SwiGLU MLP](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/SwiGLU_MLP.png)
 
 This dual-projection SwiGLU mechanism is why LoRA must be applied to three separate linear layers (`gate_proj`, `up_proj`, `down_proj`) within the MLP block for full adaptation.
