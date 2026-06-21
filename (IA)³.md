@@ -151,20 +151,6 @@ $$
 
 ## Simple PyTorch Implementation
 
-### Value Scaling
-```python
-import torch
-import torch.nn as nn
-
-class IA3ValueScaling(nn.Module):
-    def __init__(self, hidden_dim):
-        super().__init__()
-        self.lv = nn.Parameter(torch.ones(hidden_dim))
-
-    def forward(self, V):
-        return V * self.lv
-```
-
 ### Attention Scaling
 ```python
 class IA3Attention(nn.Module):
@@ -182,13 +168,27 @@ class IA3Attention(nn.Module):
 ### FFN Scaling
 ```python
 class IA3FFN(nn.Module):
-    def __init__(self, hidden_dim):
+    def __init__(self, input_dim, hidden_dim):
         super().__init__()
+        # Standard FFN weights
+        self.w1 = nn.Linear(input_dim, hidden_dim)
+        self.w2 = nn.Linear(hidden_dim, input_dim)
+        self.activation = nn.GELU()
+        
+        # IA3 Scaling Vector (l_f)
         self.lf = nn.Parameter(torch.ones(hidden_dim))
 
-    def forward(self, hidden):
-        hidden = hidden * self.lf
-        return hidden
+    def forward(self, x):
+        # 1. h = \sigma(W_1 x)
+        h = self.activation(self.w1(x))
+        
+        # 2. h' = l_f \odot h
+        h_prime = h * self.lf
+        
+        # 3. y = W_2 h'
+        y = self.w2(h_prime)
+        
+        return y
 ```
 
 ## Key Takeaways
