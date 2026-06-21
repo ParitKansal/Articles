@@ -166,8 +166,9 @@ class PTuningEncoder(nn.Module):
 # 2. Get standard word embeddings for the input text
 # word_embeddings = model.transformer.wte(input_ids)
 
-# 3. Concatenate and pass to the frozen model
-# combined_inputs = torch.cat([prompts, word_embeddings], dim=1)
+# 3. Mix continuous prompts with discrete embeddings based on a template
+# Example Template: [P1..P10] + Input_Text + [P11..P20]
+# combined_inputs = torch.cat([prompts[:, :10, :], word_embeddings, prompts[:, 10:, :]], dim=1)
 # outputs = model(inputs_embeds=combined_inputs)
 ```
 
@@ -222,28 +223,6 @@ Prefix Tuning injects trainable prefixes into every single transformer layer's a
 * **Task-Specific:** Prompts learned for one task usually do not transfer to another.
 * **Inference Overhead:** The Prompt Encoder must execute during the forward pass to generate prompt embeddings (though this is typically negligible).
 * **Scaling Behavior:** As model size reaches the tens of billions of parameters, simpler Prompt Tuning methods often become just as competitive without needing a Bi-LSTM encoder.
-
-## Beyond P-Tuning: P-Tuning v2
-
-While the original P-Tuning proved that continuous prompts could close the gap between GPT and BERT on NLU tasks, it suffered from two key limitations:
-1. **Lack of Scale Universality:** For models under 10 billion parameters, prompt optimization still lagged significantly behind full fine-tuning.
-2. **Lack of Deep Optimization:** Continuous prompts were only inserted at the input layer. This meant the tunable parameters were highly constrained by sequence length limits, and their impact on the model's final predictions was somewhat indirect.
-
-To address this, researchers introduced **P-Tuning v2**, which adapts the deep prompt optimization techniques of Prefix Tuning specifically for NLU tasks. 
-
-![P-Tuning vs P-Tuning v2 Comparison](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/p_tuning_v2_comparison.png)
-
-### Key Improvements in P-Tuning v2
-
-1. **Layer-wise Prompt Insertion:** Instead of only adding virtual tokens at the input embedding layer, P-Tuning v2 inserts them at *every* layer of the transformer. This increases the tunable parameters (from ~0.01% up to 0.1%–3%) and gives the continuous prompts a much more direct impact on deep layer representations.
-
-![P-Tuning v2 Architecture](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/p_tuning_v2_architecture.png)
-
-2. **Removal of the Reparameterization Encoder:** Unlike P-Tuning v1, which relied heavily on the Bi-LSTM/MLP Prompt Encoder to stabilize training, P-Tuning v2 drops this entirely. Researchers found that with layer-wise insertion, the reparameterization offered little improvement and actually hindered performance on smaller models.
-3. **Dropping the Verbalizer:** P-Tuning v1 typically relied on mapping outputs to specific vocabulary words (e.g., mapping a class to the word "Amazing"). P-Tuning v2 discards this and returns to a traditional classification paradigm, replacing the Language Model (LM) head with a randomly initialized linear Classification (CLS) Head. This makes it much easier to apply to complex sequence-tagging tasks.
-4. **Multi-Task Learning Compatibility:** Because continuous prompts act as perfect carriers for task-specific knowledge, P-Tuning v2 encourages pre-training virtual prompts on multi-task datasets before adapting them to downstream tasks, vastly improving robustness.
-
-By implementing these changes, P-Tuning v2 achieves performance comparable to full fine-tuning universally across model scales (from 330M to 10B parameters) and excels on difficult NLU challenges like Named Entity Recognition and Reading Comprehension.
 
 ## Real-World Application: Multilingual Adaptation
 
