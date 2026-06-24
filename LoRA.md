@@ -52,6 +52,8 @@ $$
 
 Instead of training $d \times k$ parameters, LoRA trains only $r(d+k)$ parameters, resulting in massive efficiency gains.
 
+![LoRA Architecture Diagram](https://raw.githubusercontent.com/ParitKansal/Articles/main/images/LoRA.png)
+
 ## Why Low-Rank Updates Work
 
 LoRA is motivated by the concept of **intrinsic dimensionality**. Research has shown that neural networks often learn meaningful solutions within surprisingly small subspaces of the full parameter space. During fine-tuning, the required weight updates are frequently much simpler than the original pretrained weights.

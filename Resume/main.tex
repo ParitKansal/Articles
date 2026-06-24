@@ -1,0 +1,286 @@
+%-------------------------
+% Resume in Latex
+% Author : Harshibar (modified)
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+% fontawesome
+\usepackage{fontawesome5}
+
+% fixed width
+\usepackage[scale=0.90,lf]{FiraMono}
+
+% tcolorbox for header banner and skill tags
+\usepackage[most]{tcolorbox}
+
+% Colors
+\definecolor{light-grey}{gray}{0.83}
+\definecolor{dark-grey}{gray}{0.3}
+\definecolor{text-grey}{gray}{.08}
+\definecolor{accent}{rgb}{0.122, 0.306, 0.475}
+\definecolor{accent-light}{rgb}{0.87, 0.92, 0.96}
+\definecolor{header-bg}{rgb}{0.067, 0.157, 0.255}
+\definecolor{header-sub}{rgb}{0.72, 0.81, 0.88}
+\definecolor{header-icon}{rgb}{0.52, 0.66, 0.76}
+\definecolor{header-link}{rgb}{0.88, 0.93, 0.97}
+
+\DeclareRobustCommand{\ebseries}{\fontseries{eb}\selectfont}
+\DeclareTextFontCommand{\texteb}{\ebseries}
+
+% custom underline
+\usepackage{contour}
+\usepackage[normalem]{ulem}
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+% custom font: helvetica-style
+\usepackage{tgheros}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage[T1]{fontenc}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{0in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section headers with accent color + rule
+\titleformat{\section}{
+    \bfseries \vspace{2pt} \raggedright \large \color{accent}
+}{}{0em}{}[\color{accent} {\titlerule[1.5pt]} \vspace{-4pt}]
+
+%-------------------------
+% Custom commands
+
+% Skill category badge (dark filled)
+\newcommand{\skillbadge}[1]{%
+  \colorbox{accent}{\textcolor{white}{\small\textbf{\strut#1}}}%
+}
+
+% Individual skill tag (light filled)
+\newcommand{\skilltag}[1]{%
+  \tcbox[on line, arc=2pt,
+         colback=accent-light, colframe=accent-light,
+         boxsep=0pt, left=4pt, right=4pt, top=1.5pt, bottom=1.5pt,
+         fontupper=\small\color{accent}]{#1}\hspace{2pt}%
+}
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-1pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{\textcolor{accent}{#1}} & {\color{dark-grey}\small #2}\vspace{1pt}\\
+      \textit{#3} & {\color{dark-grey} \small #4}\\
+    \end{tabular*}\vspace{-4pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+      \textcolor{accent}{\faAngleRight}\hspace{4pt}\textbf{\small #1} & {\color{dark-grey}\small #2} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+      \textcolor{accent}{#1} & {\color{dark-grey}\small #2} \\
+    \end{tabular*}\vspace{-4pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{{\color{accent}$\vcenter{\hbox{\tiny$\bullet$}}$}}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{0pt}}
+
+\color{text-grey}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING (colored banner) ----------
+\noindent\begin{tcolorbox}[
+  enhanced,
+  colback=header-bg,
+  colframe=header-bg,
+  arc=5pt,
+  outer arc=5pt,
+  boxsep=0pt,
+  left=18pt, right=18pt,
+  top=14pt, bottom=14pt,
+  width=\textwidth,
+]
+  \centering
+  {\fontsize{26}{30}\selectfont\bfseries\color{white} Parit Kansal}\\[5pt]
+  {\small\color{header-sub}
+    Machine Learning Scientist $\cdot$ Computer Vision $\cdot$ NLP $\cdot$ Document AI $\cdot$ Real-time Video Analytics
+  }\\[9pt]
+  {\small
+    \color{header-icon}{\faPhone*}\ \href{tel:+916398950353}{\color{header-link}\texttt{+91-63989-50353}}\hspace{8pt}
+    \color{header-icon}{\faEnvelope}\ \href{mailto:paritkansal121@gmail.com}{\color{header-link}\texttt{paritkansal121@gmail.com}}\hspace{8pt}
+    \color{header-icon}{\faLinkedin}\ \href{https://linkedin.com/in/paritkansal}{\color{header-link}\texttt{linkedin.com/in/paritkansal}}\\[4pt]
+    \color{header-icon}{\faGithub}\ \href{https://github.com/ParitKansal}{\color{header-link}\texttt{github.com/ParitKansal}}\hspace{8pt}
+    \color{header-icon}{\faGlobe}\ \href{https://paritkansal.in}{\color{header-link}\texttt{paritkansal.in}}
+  }
+\end{tcolorbox}
+
+\vspace{5pt}
+\noindent{\small\color{dark-grey}ML Scientist with 1.5+ years building and shipping production AI end-to-end --- real-time video analytics for McDonald's India, document processing at \textbf{100K+ documents/month}, and lead scoring on \textbf{8M+ behavioral sessions} --- spanning Computer Vision, NLP, and distributed inference.}
+\vspace{3pt}
+
+%-----------EXPERIENCE-----------
+\section{\faBriefcase\hspace{5pt}EXPERIENCE}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Xelpmoc Design and Tech Ltd}{Jan 2025 -- Present}
+      {Machine Learning Scientist}{Hyderabad, India}
+
+      \resumeSubSubheading{Docuxary --- Intelligent Document Processing}{}
+      \resumeItemListStart
+        \resumeItem{Architected an end-to-end IDP platform for invoices, receipts, and bank statements using \textbf{Gemini with extended thinking}, orchestrating multi-stage extraction, VLM-as-Judge verification, and QuickBooks sync via distributed async workers (RQ + Redis Streams)}
+        \resumeItem{Built a \textbf{parallel multi-part extraction engine} that decomposes documents into schema-bound Pydantic sections, processes pages concurrently, and streams \textbf{real-time reasoning narratives} to clients via Redis pub/sub}
+        \resumeItem{Designed a \textbf{VLM-as-Judge} verification layer performing sectional cross-checks between source document images and extracted fields, detecting \textbf{missing values, hallucinations, and mismatches} with per-section confidence scoring}
+        \resumeItem{Integrated full \textbf{QuickBooks Online} automation with intelligent entity resolution, a preflight review gate, and idempotent create/update sync --- \textbf{eliminating manual data entry} by automatically pushing extracted data into QuickBooks}
+      \resumeItemListEnd
+
+      \resumeSubSubheading{Real-time Video Analytics (McDonald's India)}{}
+      \resumeItemListStart
+        \resumeItem{Architected and deployed a scalable microservices-based real-time video analytics platform processing \textbf{multiple concurrent RTSP streams} for operational intelligence and compliance monitoring across stores}
+        \resumeItem{Fine-tuned \textbf{YOLO, ViT + LoRA, InsightFace, and XCLIP} for staff availability monitoring, customer demographics, facial emotion recognition, table occupancy analysis, and behavioral compliance detection}
+        \resumeItem{Implemented \textbf{zero-shot action recognition} pipelines using XCLIP to automatically detect policy violations including mobile phone usage, floor mopping, idle crowding, and staff engagement tracking}
+        \resumeItem{Designed automated \textbf{hygiene and SLA monitoring} systems leveraging object detection, occupancy tracking, and anomaly detection for table cleanliness assessment, dirty-floor detection, and service-quality measurement}
+        \resumeItem{Built a \textbf{fault-tolerant, low-latency} distributed architecture using Docker, Redis Streams, MinIO, MongoDB Replica Sets, Grafana, and Loki --- enabling reliable multi-stream processing, full observability, and production-scale deployment}
+      \resumeItemListEnd
+
+      \resumeSubSubheading{Intelligent Document Understanding (Firstsource)}{}
+      \resumeItemListStart
+        \resumeItem{Fine-tuned \textbf{DONUT} for conditional key--value extraction reaching \textbf{98\% field-level accuracy}}
+        \resumeItem{Trained a \textbf{Gemma-3-4B} (4-bit VLM) automated judge to verify predictions, achieving \textbf{96.67\% document-level accuracy} on \textbf{100K+ documents/month}}
+      \resumeItemListEnd
+
+      \resumeSubSubheading{Multi-Channel Lead Scoring (ASBL)}{}
+      \resumeItemListStart
+        \resumeItem{Built a multi-channel lead scoring pipeline fusing high-volume WhatsApp, web, and audio interaction data using \textbf{ModernBERT and XGBoost}, achieving \textbf{83\% recall within the top 13\% ranked events}}
+        \resumeItem{Developed an end-to-end web session and visitor scoring system trained on \textbf{8M+ behavioral sessions}, achieving \textbf{88\% session-level} and \textbf{90\% visitor-level} recall}
+      \resumeItemListEnd
+
+      \resumeSubSubheading{Document Detection Pipeline (ASK Business Services)}{}
+      \resumeItemListStart
+        \resumeItem{Created a synthetic document-generation pipeline to train \textbf{Mask R-CNN} for multi-document detection, achieving \textbf{97.1\% AP@[IoU=0.50:0.95]}}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Vodafone Idea Foundation}{Jun 2024 -- Jul 2024}
+      {Data Analytics Intern}{Remote}
+      \resumeItemListStart
+        \resumeItem{Applied EDA, statistical analysis, and \textbf{Lasso and Bayesian Regression} to quantify the impact of pricing, distribution, promotions, and competition on sales, generating actionable business insights}
+        \resumeItem{Built an interactive \textbf{Power BI} dashboard for scenario-based sales forecasting and business decision support}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+%-----------PROJECTS-----------
+\section{\faCode\hspace{5pt}ACADEMIC PROJECTS}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Comparative Analysis of Recommendation Algorithms}}{Jun 2024}
+          \resumeItemListStart
+            \resumeItem{Benchmarked SVD, SVD++, KNN, RBM, and AutoRec on RMSE, Hit Rate, and Novelty to produce side-by-side performance comparisons}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Question Pair Similarity Detection}}{Oct 2023}
+          \resumeItemListStart
+            \resumeItem{Built a duplicate-question detection system on a \textbf{400K+ Quora dataset} (85.32\% accuracy) by engineering 15+ token-overlap and fuzzy-matching features, and optimizing ensemble models (XGBoost, CatBoost, LightGBM, HistGradientBoosting) via hyperparameter tuning}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+
+%-----------EDUCATION-----------
+\section{\faGraduationCap\hspace{5pt}EDUCATION}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Harcourt Butler Technical University}{2021 -- 2025}
+      {Bachelor of Technology in Computer Science \& Engineering $|$ CGPA: 8.3/10.0}{Kanpur, India}
+    \resumeSubheading
+      {Dewan Public School}{2020}
+      {Senior Secondary (XII) $|$ 94\%}{Hapur, India}
+    \resumeSubheading
+      {Dewan Public School}{2018}
+      {Secondary (X) $|$ 98\%}{Hapur, India}
+  \resumeSubHeadingListEnd
+
+
+%-----------SKILLS-----------
+\section{\faSlidersH\hspace{5pt}SKILLS}
+ \begin{itemize}[leftmargin=0in, label={}]
+    \small{\item{
+      \skillbadge{Languages}\hspace{6pt}%
+      \skilltag{Python} \skilltag{C++} \skilltag{C}\\[6pt]
+      \skillbadge{Core Expertise}\hspace{6pt}%
+      \skilltag{Machine Learning} \skilltag{Deep Learning} \skilltag{Data Science} \skilltag{Computer Vision} \skilltag{NLP} \skilltag{Document AI} \skilltag{Real-Time Video Analytics} \skilltag{RAG} \skilltag{Graph Neural Networks} \skilltag{Few-Shot Learning} \skilltag{VLMs} \skilltag{Multimodal AI}\\[6pt]
+      \skillbadge{ML \& AI Techniques}\hspace{6pt}%
+      \skilltag{CNNs} \skilltag{Transformers} \skilltag{LLMs} \skilltag{Statistical ML} \skilltag{Transfer Learning} \skilltag{Fine-Tuning} \skilltag{LoRA} \skilltag{QLoRA} \skilltag{Prompt Engineering} \skilltag{Feature Engineering} \skilltag{Ensemble Learning} \skilltag{Object Detection} \skilltag{Instance Segmentation}\\[6pt]
+      \skillbadge{Frameworks}\hspace{6pt}%
+      \skilltag{PyTorch} \skilltag{HuggingFace} \skilltag{TensorFlow} \skilltag{Scikit-learn} \skilltag{XGBoost} \skilltag{OpenCV} \skilltag{YOLO} \skilltag{LangChain} \skilltag{LangGraph} \skilltag{FastAPI} \skilltag{Triton Inference Server} \skilltag{NumPy} \skilltag{Pandas}\\[6pt]
+      \skillbadge{Infra \& Monitoring}\hspace{6pt}%
+      \skilltag{Docker} \skilltag{Git} \skilltag{CI/CD} \skilltag{MongoDB} \skilltag{MySQL} \skilltag{MinIO} \skilltag{Redis} \skilltag{Grafana} \skilltag{Loki} \skilltag{Power BI}
+    }}
+ \end{itemize}
+
+
+%-----------CERTIFICATIONS-----------
+\section{\faCertificate\hspace{5pt}CERTIFICATIONS}
+ \begin{itemize}[leftmargin=0in, label={}]
+    \small{\item{
+      \textcolor{accent}{\faCheckCircle}\hspace{5pt}\textbf{TensorFlow: Advanced Techniques}\hspace{4pt}{\color{dark-grey}---}\hspace{4pt}Coursera \& DeepLearning.AI\hfill{\color{dark-grey}Jun 2024}\\[5pt]
+      \textcolor{accent}{\faCheckCircle}\hspace{5pt}\textbf{Machine Learning with Python}\hspace{4pt}{\color{dark-grey}---}\hspace{4pt}freeCodeCamp\hfill{\color{dark-grey}Apr 2024}
+    }}
+ \end{itemize}
+
+
+%-------------------------------------------
+\end{document}

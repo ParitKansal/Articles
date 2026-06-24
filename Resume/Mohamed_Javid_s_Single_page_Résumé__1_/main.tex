@@ -1,0 +1,171 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Deedy - One Page Two Column Resume
+% LaTeX Template
+% Version 1.1 (30/4/2014)
+%
+% Original author:
+% Debarghya Das (http://debarghyadas.com)
+%
+% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[]{deedy-resume-openfont}
+
+\begin{document}
+
+\lastupdated
+
+\namesection{Parit}{Kansal}{
+  \urlstyle{same}\url{https://paritkansal.in} \\
+  \href{mailto:paritkansal121@gmail.com}{paritkansal121@gmail.com} | +91-63989-50353
+}
+
+ML Scientist with 1.5+ years building and shipping production AI end-to-end --- real-time video analytics for McDonald's India, document processing at \custombold{100K+ documents/month}, and lead scoring on \custombold{8M+ behavioral sessions} --- spanning Computer Vision, NLP, and distributed inference.
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     COLUMN ONE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{-8pt}
+\begin{minipage}[t]{0.33\textwidth}
+
+\section{Education}
+
+\subsection{Harcourt Butler Technical University}
+\descript{B.Tech in Computer Science \& Engineering}
+\location{2021 -- 2025 | Kanpur, India \\ CGPA: 8.3 / 10.0}
+\sectionsep
+
+\subsection{Dewan Public School}
+\descript{Senior Secondary (XII)}
+\location{2020 | Hapur, India \\ Score: 94\%}
+\sectionsep
+
+\subsection{Dewan Public School}
+\descript{Secondary (X)}
+\location{2018 | Hapur, India \\ Score: 98\%}
+\sectionsep
+
+\section{Links}
+LinkedIn:// \href{https://linkedin.com/in/paritkansal}{\custombold{paritkansal}} \\
+GitHub:// \href{https://github.com/ParitKansal}{\custombold{ParitKansal}} \\
+Website:// \href{https://paritkansal.in}{\custombold{paritkansal.in}}
+\sectionsep
+
+\section{Skills}
+\subsection{Languages}
+Python \textbullet{} C++ \textbullet{} C
+\sectionsep
+
+\subsection{Core Expertise}
+Machine Learning \textbullet{} Deep Learning \\
+Data Science \textbullet{} Computer Vision \\
+NLP \textbullet{} Document AI \\
+Real-Time Video Analytics \\
+RAG \textbullet{} Graph Neural Networks \\
+Few-Shot Learning \textbullet{} VLMs \\
+Multimodal AI
+\sectionsep
+
+\subsection{ML \& AI Techniques}
+CNNs \textbullet{} Transformers \textbullet{} LLMs \\
+Statistical ML \textbullet{} Transfer Learning \\
+Fine-Tuning \textbullet{} LoRA \textbullet{} QLoRA \\
+Prompt Engineering \textbullet{} Feature Engineering \\
+Ensemble Learning \textbullet{} Object Detection \\
+Instance Segmentation
+\sectionsep
+
+\subsection{Frameworks}
+PyTorch \textbullet{} HuggingFace \textbullet{} TensorFlow \\
+Scikit-learn \textbullet{} XGBoost \textbullet{} OpenCV \\
+YOLO \textbullet{} LangChain \textbullet{} LangGraph \\
+FastAPI \textbullet{} Triton Inference Server \\
+NumPy \textbullet{} Pandas
+\sectionsep
+
+\subsection{Infra \& Monitoring}
+Docker \textbullet{} Git \textbullet{} CI/CD \\
+MongoDB \textbullet{} MySQL \textbullet{} MinIO \\
+Redis \textbullet{} Grafana \textbullet{} Loki \textbullet{} Power BI
+\sectionsep
+
+\section{Certifications}
+\subsection{TensorFlow: Advanced Techniques}
+\location{Coursera \& DeepLearning.AI | Jun 2024}
+\sectionsep
+\subsection{Machine Learning with Python}
+\location{freeCodeCamp | Apr 2024}
+\sectionsep
+
+\end{minipage}
+\hfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     COLUMN TWO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{minipage}[t]{0.66\textwidth}
+
+\section{Experience}
+
+\runsubsection{Xelpmoc Design and Tech Ltd}
+\descript{| Machine Learning Scientist}
+\location{Jan 2025 -- Present | Hyderabad, India}
+
+\noindent\custombold{Docuxary --- Intelligent Document Processing}\par\vspace{1.5pt}
+\begin{tightemize}
+\item Architected an end-to-end IDP platform for invoices, receipts, and bank statements using \custombold{Gemini with extended thinking}, orchestrating multi-stage extraction, VLM-as-Judge verification, and QuickBooks sync via distributed async workers (RQ + Redis Streams)
+\item Built a \custombold{parallel multi-part extraction engine} that decomposes documents into schema-bound Pydantic sections, processes pages concurrently, and streams \custombold{real-time reasoning narratives} to clients via Redis pub/sub
+\item Designed a \custombold{VLM-as-Judge} verification layer performing sectional cross-checks between source document images and extracted fields, detecting \custombold{missing values, hallucinations, and mismatches} with per-section confidence scoring
+\item Integrated full \custombold{QuickBooks Online} automation with intelligent entity resolution, a preflight review gate, and idempotent create/update sync --- \custombold{eliminating manual data entry} by automatically pushing extracted data into QuickBooks
+\end{tightemize}
+
+\vspace{3.5pt}\noindent\custombold{Real-time Video Analytics (McDonald's India)}\par\vspace{1.5pt}
+\begin{tightemize}
+\item Architected and deployed a scalable microservices-based real-time video analytics platform processing \custombold{multiple concurrent RTSP streams} for operational intelligence and compliance monitoring across stores
+\item Fine-tuned \custombold{YOLO, ViT + LoRA, InsightFace, and XCLIP} for staff availability monitoring, customer demographics, facial emotion recognition, table occupancy analysis, and behavioral compliance detection
+\item Implemented \custombold{zero-shot action recognition} pipelines using XCLIP to automatically detect policy violations including mobile phone usage, floor mopping, idle crowding, and staff engagement tracking
+\item Designed automated \custombold{hygiene and SLA monitoring} systems leveraging object detection, occupancy tracking, and anomaly detection for table cleanliness assessment, dirty-floor detection, and service-quality measurement
+\item Built a \custombold{fault-tolerant, low-latency} distributed architecture using Docker, Redis Streams, MinIO, MongoDB Replica Sets, Grafana, and Loki --- enabling reliable multi-stream processing, full observability, and production-scale deployment
+\end{tightemize}
+
+\vspace{3.5pt}\noindent\custombold{Intelligent Document Understanding (Firstsource)}\par\vspace{1.5pt}
+\begin{tightemize}
+\item Fine-tuned \custombold{DONUT} for conditional key-value extraction reaching \custombold{98\% field-level accuracy}
+\item Trained a \custombold{Gemma-3-4B} (4-bit VLM) automated judge to verify predictions, achieving \custombold{96.67\% document-level accuracy} on \custombold{100K+ documents/month}
+\end{tightemize}
+
+\vspace{3.5pt}\noindent\custombold{Multi-Channel Lead Scoring (ASBL)}\par\vspace{1.5pt}
+\begin{tightemize}
+\item Built a multi-channel lead scoring pipeline fusing high-volume WhatsApp, web, and audio interaction data using \custombold{ModernBERT and XGBoost}, achieving \custombold{83\% recall within the top 13\% ranked events}
+\item Developed an end-to-end web session and visitor scoring system trained on \custombold{8M+ behavioral sessions}, achieving \custombold{88\% session-level} and \custombold{90\% visitor-level} recall
+\end{tightemize}
+
+\vspace{3.5pt}\noindent\custombold{Document Detection Pipeline (ASK Business Services)}\par\vspace{1.5pt}
+\begin{tightemize}
+\item Created a synthetic document-generation pipeline to train \custombold{Mask R-CNN} for multi-document detection, achieving \custombold{97.1\% AP@[IoU=0.50:0.95]}
+\end{tightemize}
+\sectionsep
+
+\runsubsection{Vodafone Idea Foundation}
+\descript{| Data Analytics Intern}
+\location{Jun 2024 -- Jul 2024 | Remote}
+\begin{tightemize}
+\item Applied EDA, statistical analysis, and \custombold{Lasso and Bayesian Regression} to quantify the impact of pricing, distribution, promotions, and competition on sales, generating actionable business insights
+\item Built an interactive \custombold{Power BI} dashboard for scenario-based sales forecasting and business decision support
+\end{tightemize}
+\sectionsep
+
+\section{Academic Projects}
+
+\subsection{Comparative Analysis of Recommendation Algorithms | Jun 2024}
+Benchmarked SVD, SVD++, KNN, RBM, and AutoRec on RMSE, Hit Rate, and Novelty to produce side-by-side performance comparisons.
+\sectionsep
+
+\subsection{Question Pair Similarity Detection | Oct 2023}
+Built a duplicate-question detection system on a \custombold{400K+ Quora dataset} (85.32\% accuracy) by engineering 15+ token-overlap and fuzzy-matching features, and optimizing ensemble models (XGBoost, CatBoost, LightGBM, HistGradientBoosting) via hyperparameter tuning.
+\sectionsep
+
+\end{minipage}
+\end{document}

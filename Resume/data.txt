@@ -1,0 +1,99 @@
+PARIT KANSAL
+Machine Learning Scientist  •  1+ Years of Experience
+Computer Vision  •  NLP  •  Document AI  •  Real-time Video Analytics
+CONTACT
+     paritkansal121@gmail.com
+     +91-63989-50353
+     linkedin.com/in/paritkansal
+     github.com/ParitKansal
+     paritkansal.in
+
+
+PROFESSIONAL EXPERIENCE
+Machine Learning Scientist                                  Jan 2025 – Present
+Xelpmoc Design and Tech Ltd, Hyderabad, India
+Docuxray
+Architected an end-to-end intelligent document processing platform for invoices, receipts, and bank statements using Gemini with extended thinking, orchestrating extraction, VLM-as-Judge verification, postprocessing, and QuickBooks sync across distributed async workers via RQ and Redis Streams.
+Built a parallel multi-part extraction engine that decomposes documents into schema-bound Pydantic sections, processes pages concurrently, and streams real-time reasoning narratives to clients via Redis pub/sub.
+Designed a VLM-as-Judge verification layer that performs sectional cross-checks between source document images and extracted fields, detecting missing values, hallucinations, and mismatches with per-section confidence scoring.
+Integrated full QuickBooks Online automation with intelligent entity resolution, a preflight review gate, and idempotent create/update sync — eliminating manual data entry by automatically pushing extracted data directly into QuickBooks.
+
+Real-time Video Analytics (McDonald’s India)
+Architected and deployed a scalable microservices-based real-time video analytics platform processing multiple concurrent RTSP streams for operational intelligence and compliance monitoring across stores.
+Developed and fine-tuned Computer Vision and Vision-Language models including YOLO, Vision Transformers (ViT + LoRA), InsightFace, and XCLIP for staff availability monitoring, customer demographic analytics, facial emotion recognition, table occupancy analysis, and behavioral compliance detection.
+Implemented zero-shot action recognition pipelines using XCLIP to automatically detect policy violations and operational activities, including mobile phone usage, floor mopping, idle crowding, and staff engagement tracking.
+Designed automated hygiene and SLA monitoring systems leveraging object detection, occupancy tracking, and anomaly detection algorithms for table cleanliness assessment, dirty-floor detection, and service-quality measurement.
+Built a fault-tolerant, low-latency distributed architecture using Docker, Redis Streams, MinIO, MongoDB Replica Sets, Grafana, and Loki, enabling reliable multi-stream processing, observability, and production-scale deployment.
+
+Intelligent Document Understanding (Firstsource)
+Fine-tuned DONUT for conditional key–value extraction reaching 98% field-level accuracy.
+Trained a Gemma-3-4B (4-bit VLM) automated judge to verify predictions, achieving 96.67% document-level accuracy on 100K+ documents/month.
+
+Multi-Channel Lead Scoring (ASBL)
+Integrated Lead Scoring: Built a multi-channel lead scoring pipeline by fusing high-volume WhatsApp, web, and audio interaction data using ModernBERT and XGBoost, achieving 83% recall within the top 13% ranked events.
+Web Visit Scoring: Developed an end-to-end web session and visitor scoring system trained on 8M+ large-scale behavioral sessions, achieving 88% session-level and 90% visitor-level recall.
+
+Document Detection Pipeline (ASK Business Services)
+Created a synthetic document-generation pipeline to train Mask R-CNN for multi-document detection, achieving 97.1% AP@[IoU=0.50:0.95].
+
+Data Analytics Intern                                            Jun 2024 – Jul 2024
+Vodafone Idea Foundation (Remote)
+Developed Lasso and Bayesian Regression models to quantify the impact of pricing, distribution, promotions, and competition on sales performance.
+Built an interactive Power BI dashboard for scenario-based sales forecasting and business decision support.
+Applied EDA, statistical analysis, and predictive modeling to generate actionable insights from sales data.
+
+ACADEMIC PROJECTS
+Comparative Analysis of Recommendation Algos             Jun 2024
+Benchmarked SVD, SVD++, KNN, RBM, and AutoRec on RMSE, Hit Rate, and Novelty to produce side-by-side performance comparisons.
+Question Pair Similarity Detection                                          Oct 2023
+Built a duplicate-question detection system on a 400K+ Quora dataset (85.32% accuracy) by engineering 15+ token-overlap and fuzzy-matching features, and optimizing a suite of Classical ML ensemble models (XGBoost, CatBoost, LightGBM, HistGradientBoosting) via hyperparameter tuning.
+EDUCATION
+Bachelor of Technology in Computer Science & Engineering
+Harcourt Butler Technical University
+2025  •  CGPA: 8.3 / 10.0
+
+Senior Secondary (XII)
+Dewan Public School, Hapur
+2020  •  94%
+
+Secondary (X)
+Dewan Public School, Hapur
+2018  •  98%
+
+
+TECHNICAL SKILLS
+Languages
+Python, C++, C
+
+Core Expertise
+Machine Learning, Deep Learning, Computer Vision, Natural Language Processing (NLP), Document AI, Data Science, Real-Time Video Analytics, Retrieval-Augmented Generation (RAG), Graph Neural Networks (GNNs), Few-Shot Learning, Vision-Language Models (VLMs), Multimodal AI
+
+ML & AI Techniques
+Statistical Machine Learning, CNNs, Transformers, LLMs, VLMs, ANNs, Transfer Learning, Fine-Tuning, LoRA, QLoRA, Prompt Engineering, Feature Engineering, Ensemble Learning, Classification, Regression, Object Detection, Instance Segmentation
+
+Frameworks
+PyTorch, TensorFlow, Scikit-learn, XGBoost, OpenCV, YOLO, LangChain, LangGraph, FastAPI, Triton Inference Server, NumPy, Pandas
+
+Infra & Monitoring
+Docker, CI/CD, MongoDB, MySQL, MinIO, Redis, Grafana, Loki, Power BI
+
+
+CERTIFICATIONS
+TensorFlow: Advanced Techniques 
+Coursera & DeepLearning.AI |  Jun 2024
+
+Machine Learning with Python
+freeCodeCamp  |  Apr 2024
+
+
+CORE STRENGTHS
+End-to-end ML System Design
+Mathematical Depth
+Cross-functional Collaboration
+Continuous Learning
+
+
+
+
+
+
